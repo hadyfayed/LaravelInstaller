@@ -59,7 +59,7 @@ class DatabaseManager
             Artisan::call('migrate', ["--force"=> true], $outputLog);
         }
         catch(Exception $e){
-            return $this->response($e->getMessage());
+            return $this->response($e->getMessage(), 'danger', $outputLog);
         }
 
         return $this->seed($outputLog);
@@ -88,7 +88,7 @@ class DatabaseManager
      * @param collection $outputLog
      * @return array
      */
-    private function response($message, $status = 'danger', $outputLog)
+    private function response($message, $status = 'danger', $outputLog = null)
     {
         return [
             'status' => $status,
