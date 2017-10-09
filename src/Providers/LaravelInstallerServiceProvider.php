@@ -1,11 +1,11 @@
 <?php
 
-namespace RachidLaasri\LaravelInstaller\Providers;
+namespace HadyFayed\LaravelInstaller\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use RachidLaasri\LaravelInstaller\Middleware\canInstall;
-use RachidLaasri\LaravelInstaller\Middleware\canUpdate;
+use HadyFayed\LaravelInstaller\Middleware\CanInstall;
+use HadyFayed\LaravelInstaller\Middleware\CanUpdate;
 
 class LaravelInstallerServiceProvider extends ServiceProvider
 {
@@ -23,8 +23,6 @@ class LaravelInstallerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->publishFiles();
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
     }
 
     /**
@@ -34,31 +32,21 @@ class LaravelInstallerServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
+        $this->publishes([__DIR__.'/../../config/installer.php' => config_path('installer.php'),]
+            , 'laravelinstaller');
+
+        $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
         $router->middlewareGroup('install',[CanInstall::class]);
         $router->middlewareGroup('update',[CanUpdate::class]);
-    }
 
-    /**
-     * Publish config file for the installer.
-     *
-     * @return void
-     */
-    protected function publishFiles()
-    {
-        $this->publishes([
-            __DIR__.'/../Config/installer.php' => base_path('config/installer.php'),
-        ], 'laravelinstaller');
+        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'installer');
+        $this->publishes([__DIR__.'/../../resources/lang' => resource_path('lang/vendor/installer'),]
+            , 'laravelinstaller');
 
-        $this->publishes([
-            __DIR__.'/../assets' => public_path('installer'),
-        ], 'laravelinstaller');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'installer');
+        $this->publishes([__DIR__.'/../../resources/views' => resource_path('views/vendor/installer'),]
+            , 'laravelinstaller');
 
-        $this->publishes([
-            __DIR__.'/../Views' => base_path('resources/views/vendor/installer'),
-        ], 'laravelinstaller');
-
-        $this->publishes([
-            __DIR__.'/../Lang' => base_path('resources/lang'),
-        ], 'laravelinstaller');
+        $this->publishes([__DIR__.'/../../resources/assets' => public_path('vendor/installer'),], 'laravelinstaller');
     }
 }

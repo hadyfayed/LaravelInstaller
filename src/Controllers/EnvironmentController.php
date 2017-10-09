@@ -1,11 +1,11 @@
 <?php
 
-namespace RachidLaasri\LaravelInstaller\Controllers;
+namespace HadyFayed\LaravelInstaller\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use RachidLaasri\LaravelInstaller\Helpers\EnvironmentManager;
+use HadyFayed\LaravelInstaller\Helpers\EnvironmentManager;
 use Validator;
 use Illuminate\Validation\Rule;
 
@@ -70,7 +70,7 @@ class EnvironmentController extends Controller
         $message = $this->EnvironmentManager->saveFileClassic($input);
 
         return $redirect->route('LaravelInstaller::environmentClassic')
-                        ->with(['message' => $message]);
+        ->with(['message' => $message]);
     }
 
     /**
@@ -87,17 +87,17 @@ class EnvironmentController extends Controller
             'environment_custom.required_if' => trans('installer_messages.environment.wizard.form.name_required'),
         ];
 
-        $validator = Validator::make($request->all(),$rules, $messages);
+        $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
+            $this->validateWith(
+                $validator, $request
             );
         }
 
         $results = $this->EnvironmentManager->saveFileWizard($request);
 
         return $redirect->route('LaravelInstaller::database')
-                        ->with(['results' => $results]);
+        ->with(['results' => $results]);
     }
 }

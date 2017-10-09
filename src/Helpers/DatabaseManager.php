@@ -1,6 +1,6 @@
 <?php
 
-namespace RachidLaasri\LaravelInstaller\Helpers;
+namespace HadyFayed\LaravelInstaller\Helpers;
 
 use Exception;
 use Illuminate\Database\SQLiteConnection;
@@ -11,19 +11,40 @@ use Symfony\Component\Console\Output\BufferedOutput;
 
 class DatabaseManager
 {
+
     /**
-     * Migrate and seed the database.
+     * check database type. If SQLite, then create the database file.
      *
+     * @param collection $outputLog
+     */
+    private function sqlite($outputLog)
+    {
+        if(DB::connection() instanceof SQLiteConnection) {
+            $database = DB::connection()->getDatabaseName();
+            if(!file_exists($database)) {
+                touch($database);
+                DB::reconnect(Config::get('database.default'));
+            }
+            $outputLog->write('Using SqlLite database: ' . $database, 1);
+        }
+    }
+    
+    /**
+     * Seed the database.
+     *
+     * @param collection $outputLog
      * @return array
      */
-    public function migrateAndSeed()
+    private function seed($outputLog)
     {
-        $outputLog = new BufferedOutput;
+        try{
+            Artisan::call('db:seed', [], $outputLog);
+        }
+        catch(Exception $e){
+            return $this->response($e->getMessage());
+        }
 
-        $this->sqlite($outputLog);
-        $this->migrate($outputLog);
-
-        return $this->migrate($outputLog);
+        return $this->response(trans('installer_messages.final.finished'), 'success', $outputLog);
     }
 
     /**
@@ -45,21 +66,18 @@ class DatabaseManager
     }
 
     /**
-     * Seed the database.
+     * Migrate and seed the database.
      *
-     * @param collection $outputLog
-     * @return array
+     * @return array|collection
      */
-    private function seed($outputLog)
+    public function migrateAndSeed()
     {
-        try{
-            Artisan::call('db:seed', [], $outputLog);
-        }
-        catch(Exception $e){
-            return $this->response($e->getMessage());
-        }
+        $outputLog = new BufferedOutput;
 
-        return $this->response(trans('installer_messages.final.finished'), 'success', $outputLog);
+        $this->sqlite($outputLog);
+        //$this->migrate($outputLog);
+
+        return $this->migrate($outputLog);
     }
 
     /**
@@ -77,22 +95,5 @@ class DatabaseManager
             'message' => $message,
             'dbOutputLog' => $outputLog->fetch()
         ];
-    }
-
-    /**
-     * check database type. If SQLite, then create the database file.
-     *
-     * @param collection $outputLog
-     */
-    private function sqlite($outputLog)
-    {
-        if(DB::connection() instanceof SQLiteConnection) {
-            $database = DB::connection()->getDatabaseName();
-            if(!file_exists($database)) {
-                touch($database);
-                DB::reconnect(Config::get('database.default'));
-            }
-            $outputLog->write('Using SqlLite database: ' . $database, 1);
-        }
     }
 }

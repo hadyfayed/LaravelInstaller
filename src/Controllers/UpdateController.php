@@ -1,14 +1,14 @@
 <?php
 
-namespace RachidLaasri\LaravelInstaller\Controllers;
+namespace HadyFayed\LaravelInstaller\Controllers;
 
 use Illuminate\Routing\Controller;
-use RachidLaasri\LaravelInstaller\Helpers\InstalledFileManager;
-use RachidLaasri\LaravelInstaller\Helpers\DatabaseManager;
+use HadyFayed\LaravelInstaller\Helpers\DatabaseManager;
+use HadyFayed\LaravelInstaller\Helpers\InstalledFileManager;
 
 class UpdateController extends Controller
 {
-    use \RachidLaasri\LaravelInstaller\Helpers\MigrationsHelper;
+    use \HadyFayed\LaravelInstaller\Helpers\MigrationsHelper;
 
     /**
      * Display the updater welcome page.
@@ -30,7 +30,9 @@ class UpdateController extends Controller
         $migrations = $this->getMigrations();
         $dbMigrations = $this->getExecutedMigrations();
 
-        return view('vendor.installer.update.overview', ['numberOfUpdatesPending' => count($migrations) - count($dbMigrations)]);
+        return view('vendor.installer.update.overview',
+            ['numberOfUpdatesPending' => count($migrations) - count($dbMigrations)]
+        );
     }
 
     /**

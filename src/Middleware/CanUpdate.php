@@ -1,13 +1,12 @@
 <?php
 
-namespace RachidLaasri\LaravelInstaller\Middleware;
+namespace HadyFayed\LaravelInstaller\Middleware;
 
 use Closure;
-use RachidLaasri\LaravelInstaller\Middleware\canInstall;
 
-class canUpdate
+class CanUpdate
 {
-    use \RachidLaasri\LaravelInstaller\Helpers\MigrationsHelper;
+    use \HadyFayed\LaravelInstaller\Helpers\MigrationsHelper;
 
     /**
      * Handle an incoming request.
@@ -21,7 +20,7 @@ class canUpdate
         $updateEnabled = filter_var(config('installer.updaterEnabled'), FILTER_VALIDATE_BOOLEAN);
         switch ($updateEnabled) {
             case true:
-                $canInstall = new canInstall;
+                $canInstall = new CanInstall;
 
                 // if the application has not been installed,
                 // redirect to the installer

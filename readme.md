@@ -1,8 +1,11 @@
-# Laravel Web Installer | A Web Installer [Package](https://packagist.org/packages/rachidlaasri/laravel-installer)
+# Credit 
+- Based on RachidLaasri Laravel Web Installer | A Web Installer [Package](https://packagist.org/packages/rachidlaasri/laravel-installer)
 
-[![Total Downloads](https://poser.pugx.org/rachidlaasri/laravel-installer/d/total.svg)](https://packagist.org/packages/rachidlaasri/laravel-installer)
-[![Latest Stable Version](https://poser.pugx.org/rachidlaasri/laravel-installer/v/stable.svg)](https://packagist.org/packages/rachidlaasri/laravel-installer)
-[![License](https://poser.pugx.org/rachidlaasri/laravel-installer/license.svg)](https://packagist.org/packages/rachidlaasri/laravel-installer)
+# Laravel Web Installer | A Web Installer [Package](https://packagist.org/packages/hadyfayed/laravel-installer)
+
+[![Total Downloads](https://poser.pugx.org/rachidlaasri/laravel-installer/d/total.svg)](https://packagist.org/packages/hadyfayed/laravel-installer)
+[![Latest Stable Version](https://poser.pugx.org/rachidlaasri/laravel-installer/v/stable.svg)](https://packagist.org/packages/hadyfayed/laravel-installer)
+[![License](https://poser.pugx.org/rachidlaasri/laravel-installer/license.svg)](https://packagist.org/packages/hadyfayed/laravel-installer)
 
 - [About](#about)
 - [Requirements](#requirements)
@@ -30,29 +33,14 @@ The current features are :
 
 ## Requirements
 
-* [Laravel 5.1, 5.2, 5.3, 5.4 or newer](https://laravel.com/docs/installation)
+* [Laravel 5.5+](https://laravel.com/docs/installation)
 
 ## Installation
 
-1. From your projects root folder in terminal run:
+- From your projects root folder in terminal run:
 
 ```bash
-    composer require rachidlaasri/laravel-installer
-```
-
-2. Register the package with laravel in `config/app.php` under `providers` with the following:
-
-```php
-	'providers' => [
-	    RachidLaasri\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
-
-	];
-```
-
-3. Publish the packages views, config file, assets, and language files by running the following from your projects root folder:
-
-```bash
-    php artisan vendor:publish --tag=laravelinstaller
+    composer require hadyfayed/laravel-installer
 ```
 
 ## Routes
@@ -81,8 +69,8 @@ The current features are :
 
 ## Contributing
 
-* If you have any suggestions please let me know : https://github.com/RachidLaasri/LaravelInstaller/pulls.
-* Please help us provide more languages for this awesome package please send a pull request https://github.com/RachidLaasri/LaravelInstaller/pulls.
+* If you have any suggestions please let me know : https://github.com/hadyfayed/LaravelInstaller/pulls.
+* Please help us provide more languages for this awesome package please send a pull request https://github.com/hadyfayed/LaravelInstaller/pulls.
 
 ## Help
 
