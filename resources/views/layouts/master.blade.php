@@ -29,6 +29,10 @@
                         <i class="step__icon fa fa-server" aria-hidden="true"></i>
                     </li>
                     <li class="step__divider"></li>
+                    <li class="step__item {{ isActive('LaravelInstaller::admin') }}">
+                        <i class="step__icon fa fa-user" aria-hidden="true"></i>
+                    </li>
+                    <li class="step__divider"></li>
                     <li class="step__item {{ isActive('LaravelInstaller::environment')}} {{ isActive('LaravelInstaller::environmentWizard')}} {{ isActive('LaravelInstaller::environmentClassic')}}">
                         @if(Request::is('install/environment') || Request::is('install/environment/wizard') || Request::is('install/environment/classic') )
                             <a href="{{ route('LaravelInstaller::environment') }}">
